@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 4 108 66" width="108" height="66">
+  <title>Ida wordmark</title>
+  <!-- Requires Schibsted Grotesk Bold (Google Fonts). Outline the text before handing to print/vendors. -->
+  <text x="0" y="67.5" font-family="'Schibsted Grotesk', sans-serif" font-weight="700" font-size="72" letter-spacing="-1.44" fill="#1f5a43">&#x131;da</text>
+  <g transform="rotate(6 9.60 17.57) translate(4.2 4.43) scale(0.7860) translate(-0.80 -1.00)">
+    <path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2" fill="none" stroke="#1f5a43" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

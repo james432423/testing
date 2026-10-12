@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <title>Ida - Notebook (green)</title>
+  <rect width="24" height="24" rx="5.3" fill="#1f5a43"/>
+  <g stroke="#2c6a51" stroke-width=".5">
+    <path d="M9.8 7H21"/>
+    <path d="M9.8 11H21"/>
+    <path d="M9.8 15H21"/>
+    <path d="M9.8 19H21"/>
+  </g>
+  <path d="M8.6 0V24" stroke="#6f9c86" stroke-width="1.1"/>
+  <path d="M5 13.4c1.6 1 2.9 2.4 3.9 4.3C11.2 11.6 14.4 7.6 18.9 5" fill="none" stroke="#eeeae3" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

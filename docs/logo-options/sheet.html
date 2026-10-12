@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ida Icon Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --green:#1f5a43; --oat:#eeeae3; --ink:#1d1f1e; --night:#11100e; --rule:#c9dccf; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px; background: #fff; color: var(--ink);
+         font-family: "Schibsted Grotesk", system-ui, sans-serif; width: 1320px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: #5b5f5c; font-size: 13px; margin: 0 0 24px; }
+  .opt { border-top: 1px solid #e3e0da; padding: 18px 0 20px; }
+  .cap { font-size: 14px; margin: 0 0 12px; }
+  .cap b { color: var(--green); }
+  .grounds { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .g { border-radius: 10px; padding: 12px; display: flex; align-items: flex-end; gap: 14px; }
+  .g .lbl { font-size: 10px; letter-spacing: .04em; text-transform: uppercase; opacity: .6; position: absolute; }
+  .g { position: relative; padding-top: 26px; }
+  .g .lbl { top: 8px; left: 12px; }
+  .white { background: #fff; outline: 1px solid #e3e0da; }
+  .oat { background: var(--oat); }
+  .night { background: var(--night); color: #eee; }
+  .gray { background: #fff; outline: 1px solid #e3e0da; }
+  .gray img { filter: grayscale(1); }
+  img { display: block; }
+  .s180 { width: 160px; height: 160px; }
+  .s32 { width: 32px; height: 32px; }
+  .s16 { width: 16px; height: 16px; }
+  /* wordmark */
+  .wm-row { display: flex; gap: 8px; }
+  .wm-row .g { flex: 1; align-items: center; justify-content: center; gap: 36px; min-height: 140px; }
+  .wm { position: relative; display: inline-block; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+  .wm .t { position: absolute; overflow: visible; }
+  .wm.green { color: var(--green); } .wm.ink { color: var(--ink); } .wm.oatc { color: var(--oat); }
+</style>
+</head>
+<body>
+<h1>Ida &mdash; app icon options</h1>
+<p class="sub">Each ground shows 180 (rendered at 160 to fit), 32 and 16px. The 16px slot uses the *-16.svg small-size file. Last column is the white ground in grayscale.</p>
+<div id="opts"></div>
+
+<div class="opt">
+  <p class="cap"><b>D &middot; Wordmark</b> &mdash; Schibsted Grotesk Bold, dotless ı with the hand-drawn tick as its dot (~1.5&times; an i-dot, centered on the stem, leaning right). Shown at 72px and 30px.</p>
+  <div class="wm-row">
+    <div class="g white"><span class="lbl">white</span><span class="wm green" style="font-size:72px">ıda</span><span class="wm green" style="font-size:30px">ıda</span></div>
+    <div class="g oat"><span class="lbl">oat</span><span class="wm ink" style="font-size:72px" data-tick="#1f5a43">ıda</span><span class="wm ink" style="font-size:30px" data-tick="#1f5a43">ıda</span></div>
+    <div class="g night"><span class="lbl">#11100e</span><span class="wm oatc" style="font-size:72px" data-tick="#86c9a5">ıda</span><span class="wm oatc" style="font-size:30px" data-tick="#86c9a5">ıda</span></div>
+    <div class="g gray" style="filter:grayscale(1)"><span class="lbl">grayscale</span><span class="wm green" style="font-size:72px">ıda</span><span class="wm green" style="font-size:30px">ıda</span></div>
+  </div>
+</div>
+
+<script>
+const OPTS = [
+  ["a-handled-oat", "<b>A1 &middot; Handled, oat</b> &mdash; open hand-drawn ring like the circled numbers; the tick breaks out through the gap."],
+  ["a-handled-green", "<b>A2 &middot; Handled, green</b> &mdash; same mark, oat on forest green."],
+  ["b-notebook-oat", "<b>B1 &middot; Notebook, oat</b> &mdash; the home-screen sheet: margin line a third in, one bold tick hinged on it."],
+  ["b-notebook-green", "<b>B2 &middot; Notebook, green</b> &mdash; oat tick on green with a muted margin line."],
+  ["c-closed-oat", "<b>C1 &middot; Closed, oat</b> &mdash; a hand-drawn house whose door is a green tick: the listing&rsquo;s paperwork is done."],
+  ["c-closed-green", "<b>C2 &middot; Closed, green</b> &mdash; same, oat on green."],
+];
+const grounds = [["white","white"],["oat","oat"],["night","#11100e"],["gray","grayscale"]];
+const host = document.getElementById("opts");
+for (const [f, cap] of OPTS) {
+  const o = document.createElement("div"); o.className = "opt";
+  let h = `<p class="cap">${cap}</p><div class="grounds" style="grid-template-columns:repeat(4,1fr)">`;
+  for (const [cls, lbl] of grounds) {
+    h += `<div class="g ${cls}"><span class="lbl">${lbl}</span>
+      <img class="s180" src="${f}.svg" alt=""><img class="s32" src="${f}.svg" alt=""><img class="s16" src="${f}-16.svg" alt=""></div>`;
+  }
+  o.innerHTML = h + "</div>"; host.appendChild(o);
+}
+
+// Tick-as-dot for the wordmark. Tick path from the brand, in its own 24 box.
+const TICK = "M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2";
+// tick geometry (em units)
+const TW = 0.25;            // tick box width  (~1.5x a bold i-dot, ~0.155em)
+const STROKE_U = 6.4;        // stroke in tick-box units (box width = 16.5 + stroke)
+const LEAN = 6;              // degrees of extra rightward lean
+function placeTicks() {
+  for (const wm of document.querySelectorAll(".wm")) {
+    const fs = parseFloat(getComputedStyle(wm).fontSize);
+    const color = wm.dataset.tick || getComputedStyle(wm).color;
+    const tn = wm.firstChild;
+    const r = document.createRange(); r.setStart(tn, 0); r.setEnd(tn, 1);
+    const ir = r.getBoundingClientRect(), wr = wm.getBoundingClientRect();
+    // x-height via canvas
+    const cv = document.createElement("canvas").getContext("2d");
+    cv.font = `700 ${fs}px "Schibsted Grotesk"`;
+    const xh = cv.measureText("x").actualBoundingBoxAscent;
+    const base = cv.measureText("x").fontBoundingBoxAscent; // baseline from top of line box (approx)
+    const m = cv.measureText("ı");
+    const stemC = (ir.left - wr.left) + (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+    const SU = fs < 40 ? 7.8 : STROKE_U; // heavier at text sizes so it holds as a dot
+    const vbW = 16.5 + SU, vbH = 14.5 + SU;
+    const w = TW * fs, h = w * vbH / vbW;
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", `${4 - SU/2} ${4.2 - SU/2} ${vbW} ${vbH}`);
+    svg.setAttribute("class", "t");
+    svg.style.width = w + "px"; svg.style.height = h + "px";
+    // baseline position inside the span: line-height 1 so content box = fs; use ascent ratio
+    const lineTop = (fs - (cv.measureText("x").fontBoundingBoxAscent + cv.measureText("x").fontBoundingBoxDescent)) / 2;
+    const baselineY = lineTop + base;
+    const gap = 0.12 * fs;
+    // optical: bounding-box center sits a hair right of stem because the vertex is left-heavy
+    // vertex of the tick (35% across its box) sits on the stem centre; the long arm leans off to the right
+    svg.style.left = (stemC - 0.35 * w) + "px";
+    svg.style.top = (baselineY - xh - gap - h) + "px";
+    svg.style.transform = `rotate(${LEAN}deg)`;
+    svg.style.transformOrigin = "30% 80%";
+    svg.innerHTML = `<path d="${TICK}" fill="none" stroke="${color}" stroke-width="${SU}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    wm.appendChild(svg);
+    wm.dataset.debug = JSON.stringify({fs, stemC, xh, baselineY, w, h, left: parseFloat(svg.style.left), top: parseFloat(svg.style.top)});
+  }
+}
+document.fonts.ready.then(placeTicks);
+</script>
+</body>
+</html>

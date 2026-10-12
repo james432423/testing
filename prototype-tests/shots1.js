@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');const O=process.argv[2];
+(async()=>{const b=await chromium.launch();
+const c=await b.newContext({viewport:{width:390,height:844},colorScheme:'dark'});const p=await c.newPage();
+await p.goto('http://localhost:8765/');await p.waitForTimeout(400);
+await p.fill('.ask input','When is the Linden closing?');await p.press('.ask input','Enter');await p.waitForTimeout(300);
+await p.screenshot({path:O+'/phone-dark-today.png'});
+await p.goto('http://localhost:8765/tasks.html');await p.waitForTimeout(300);await p.locator('[data-open]').first().click();await p.waitForTimeout(300);
+await p.screenshot({path:O+'/phone-dark-taskpanel.png'});
+const d=await b.newContext({viewport:{width:1240,height:900},colorScheme:'dark'});const q=await d.newPage();
+await q.goto('http://localhost:8765/workflows.html');await q.waitForTimeout(300);await q.locator('[data-menu]').first().click();await q.waitForTimeout(200);
+await q.screenshot({path:O+'/desk-dark-workflows.png'});
+await b.close();})();

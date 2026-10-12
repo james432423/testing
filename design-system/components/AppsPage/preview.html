@@ -1,0 +1,62 @@
+<!-- @dsCard group="Screens" height=1300 width=1240 page subtitle="Each connected tool with exactly what Ida can see and do, and problems first." -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apps — preview</title>
+<style>
+  body { background: var(--paper-sunk); }
+  .app { display: grid; grid-template-columns: 200px minmax(0, 1fr); min-height: 1100px; }
+  .side { padding: var(--space-6) var(--space-4) var(--space-8) var(--space-6); display: flex; flex-direction: column; gap: var(--space-8); }
+  .side .ida-mark { min-height: 44px; display: flex; align-items: center; }
+  .side nav { display: grid; gap: 2px; }
+  .side a { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 0 var(--space-3); margin-left: calc(var(--space-3) * -1); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; }
+  .side a:hover { background: var(--paper-raised); }
+  .side a[aria-current="page"] { font-weight: 700; background: var(--paper-raised); box-shadow: var(--shadow-paper); }
+  .count { min-width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; background: var(--brand-fill); color: var(--on-brand); }
+  .who { margin-top: auto; display: grid; gap: 2px; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .who strong { color: var(--ink); font-weight: 600; font-size: 14px; }
+  .desk { min-width: 0; padding-block: var(--space-6) var(--space-12); padding-inline: var(--space-4) var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--space-4) var(--space-8); align-content: start; }
+  .topbar { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between; min-height: 44px; }
+  .example { font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .ask { flex: 0 1 360px; display: flex; align-items: center; min-height: 44px; box-sizing: border-box; border: 1px solid var(--line-strong); background: var(--paper-raised); border-radius: var(--radius-sm); padding: 0 var(--space-3); font-size: 15px; }
+  .ask input { all: unset; flex: 1; min-width: 0; color: var(--ink); }
+  .ask input::placeholder { color: var(--ink-muted); }
+  .rail { display: grid; gap: var(--space-6); align-content: start; }
+  .tabbar { display: none; }
+  @media (max-width: 1080px) { .desk { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); } .side { display: none; }
+    .desk { padding-inline: var(--space-4); padding-bottom: 96px; }
+    .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--paper-raised); border-top: 1px solid var(--rule); }
+    .tabbar a { display: grid; place-items: center; min-height: 48px; font-size: 12px; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
+    .tabbar a[aria-current] { color: var(--ink); }
+  }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav><a href="#">Today <span class="count">3</span></a><a href="#">Tasks</a><a href="#">Workflows</a><a href="#">Your rules</a><a href="#" aria-current="page">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+  <div class="desk">
+    <div class="topbar"><span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Sample data</span><label class="ask"><input type="text" placeholder="Tell Ida something, or ask a question"></label></div>
+    <main class="ida-sheet ida-page">
+      <header class="ida-pagehead"><div><h1>Connected apps</h1><p>What Ida can see and do in each of your tools.</p></div><button class="ida-btn" type="button">Connect an app</button></header>
+      <article class="ida-app"><span class="ida-app__logo" aria-hidden="true">GM</span><div class="ida-app__t"><h2>Gmail <span class="ida-chip ida-chip--done">Connected</span></h2><p>Reads new leads, inspection reports and replies. Drafts emails; sends only after you approve, or on its own for workflows you set to "On its own".</p><small>Last synced 2 min ago</small></div><button class="ida-btn ida-btn--quiet" type="button">Manage</button></article>
+      <article class="ida-app is-problem"><span class="ida-app__logo" aria-hidden="true">GC</span><div class="ida-app__t"><h2>Google Calendar <span class="ida-chip ida-chip--problem">Disconnected</span></h2><p>Google ended the connection on Oct 11. The showing scheduler is paused until you reconnect.</p><small>Reconnect takes about 30 seconds</small></div><button class="ida-btn ida-btn--primary" type="button">Reconnect</button></article>
+      <article class="ida-app"><span class="ida-app__logo" aria-hidden="true">FB</span><div class="ida-app__t"><h2>Follow Up Boss <span class="ida-chip ida-chip--done">Connected</span></h2><p>Reads and updates your leads and notes. Never deletes contacts.</p><small>Last synced 5 min ago</small></div><button class="ida-btn ida-btn--quiet" type="button">Manage</button></article>
+      <article class="ida-app"><span class="ida-app__logo" aria-hidden="true">DL</span><div class="ida-app__t"><h2>Dotloop <span class="ida-chip ida-chip--done">Connected</span></h2><p>Reads deal documents and dates. Files signed documents into the right loop.</p><small>Last synced 1 hour ago</small></div><button class="ida-btn ida-btn--quiet" type="button">Manage</button></article>
+      <article class="ida-app"><span class="ida-app__logo" aria-hidden="true">ZP</span><div class="ida-app__t"><h2>Zillow Premier Agent <span class="ida-chip ida-chip--done">Connected</span></h2><p>Receives new leads the moment they arrive.</p><small>Last lead 8:14 am</small></div><button class="ida-btn ida-btn--quiet" type="button">Manage</button></article>
+      <article class="ida-app"><span class="ida-app__logo" aria-hidden="true">QB</span><div class="ida-app__t"><h2>QuickBooks <span class="ida-chip">Not connected</span></h2><p>Would let Ida log commissions and expenses for your accountant.</p><small>Ida could take 1 task</small></div><button class="ida-btn" type="button">Connect</button></article>
+
+    </main>
+    <aside class="rail"><section class="ida-panel"><h2 class="h">Your data</h2><ul class="ida-facts"><li>Ida only touches the apps you connect, with the access listed on each.</li><li>Client details stay yours: never shared between clients or with anyone else.</li><li>Disconnect any app at any time; Ida stops at once and tells you what paused.</li></ul></section></aside>
+  </div>
+  <nav class="tabbar" aria-label="Main"><a href="#">Today</a><a href="#">Tasks</a><a href="#">Workflows</a><a href="#">Your rules</a></nav>
+</div>
+</body>
+</html>

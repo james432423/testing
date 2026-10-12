@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <title>Ida - Notebook (green, small)</title>
+  <rect width="24" height="24" rx="5.3" fill="#1f5a43"/>
+  <path d="M8.6 0V24" stroke="#7fae96" stroke-width="1.6"/>
+  <path d="M4.6 13c1.8 1.1 3.2 2.7 4.3 4.8C11.3 11.4 14.6 7.2 19.4 4.5" fill="none" stroke="#eeeae3" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

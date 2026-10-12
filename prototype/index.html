@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ida · Today (design mock)</title>
+<link rel="stylesheet" href="ida.css">
+<link rel="stylesheet" href="ida-ui.css">
+<style>
+  body { background: var(--paper-sunk); }
+  .app { display: grid; grid-template-columns: 200px minmax(0, 1fr); min-height: 1400px; }
+  .side { padding: var(--space-6) var(--space-4) var(--space-8) var(--space-6); display: flex; flex-direction: column; gap: var(--space-8); }
+  .side nav { display: grid; gap: 2px; }
+  .side a { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 0 var(--space-3); margin-left: calc(var(--space-3) * -1); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; }
+  .side a:hover { background: var(--paper-raised); }
+  .side a[aria-current="page"] { font-weight: 700; background: var(--paper-raised); box-shadow: var(--shadow-paper); }
+  .count { min-width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; background: var(--brand-fill); color: var(--on-brand); font-variant-numeric: tabular-nums; }
+  .side .ida-mark { min-height: 44px; display: flex; align-items: center; }
+  .who { margin-top: auto; display: grid; gap: 2px; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .who strong { color: var(--ink); font-weight: 600; font-size: 14px; }
+
+  .desk { min-width: 0; padding-block: var(--space-6) var(--space-12); padding-inline: var(--space-4) var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-4) var(--space-8); align-content: start; }
+  .topbar { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between; }
+  .example { font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .ask { flex: 0 1 360px; display: flex; align-items: center; min-height: 44px; box-sizing: border-box; border: 1px solid var(--line-strong); background: var(--paper-raised); border-radius: var(--radius-sm); padding: 0 var(--space-3); font-size: 15px; }
+  .ask input { all: unset; flex: 1; min-width: 0; color: var(--ink); }
+  .ask input::placeholder { color: var(--ink-muted); }
+  .ask:focus-within { box-shadow: var(--focus-ring); }
+
+  .greet h1 { margin: 0; font-size: 40px; line-height: 44px; font-weight: 700; letter-spacing: -0.025em; }
+  .greet p { margin: var(--space-2) 0 0; font-size: 19px; line-height: 27px; max-width: 46ch; }
+  .day { font-weight: 700; font-size: 13px; line-height: 16px; color: var(--ink-muted); text-align: right; padding-top: 6px; }
+  .day b { display: block; font-size: 28px; line-height: 30px; color: var(--ink); letter-spacing: -0.02em; }
+  .h { margin: 0; font-size: 17px; line-height: 24px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+  .items { display: grid; gap: var(--space-8); margin-top: var(--space-8); }
+  .fix { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-start; } .fix .ida-chip { margin-top: 2px; }
+  .fix p { margin: 0; flex: 1 1 260px; }
+  .fix b { font-weight: 600; }
+  .ida-circle { color: var(--ink); }
+  .waiting { font-size: 13px; color: var(--ink-muted); }
+
+  .insight { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); align-items: center; background: var(--paper-sunk); border-radius: var(--radius-md); padding: var(--space-6); }
+  .insight .k { font-size: 13px; font-weight: 600; color: var(--ink-muted); }
+  .insight h3 { margin: var(--space-1) 0 var(--space-2); font-size: 19px; line-height: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  .insight p { margin: 0 0 var(--space-4); color: var(--ink); }
+  .chart { display: grid; gap: var(--space-2); }
+  .bars { display: flex; align-items: flex-end; gap: 10px; height: 96px; max-width: 360px; border-bottom: 1px solid var(--line-strong); }
+  .bars div { flex: 1; display: grid; justify-items: center; gap: 4px; align-content: end; height: 100%; }
+  .bars i { display: block; width: 100%; border-radius: 3px 3px 0 0; background: var(--rule); }
+  .bars div:last-child i { background: var(--brand); }
+  .bars b { font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .wk { display: flex; gap: 10px; max-width: 360px; font-size: 11px; color: var(--ink-muted); }
+  .wk span { flex: 1; text-align: center; }
+  .chart small { font-size: 12px; color: var(--ink-muted); }
+
+  .log { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-3); }
+  .log .t { display: grid; grid-template-columns: minmax(0, 1fr) 72px; gap: var(--space-3); align-items: baseline; }
+  .log .t small { font-size: 13px; color: var(--ink-muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .dd { font-size: 13px; line-height: 23px; font-weight: 700; color: var(--ink-muted); }
+  .flag { display: inline-flex; margin-left: var(--space-2); vertical-align: 1px; }
+
+  .rail { display: grid; gap: var(--space-6); align-content: start; }
+  .ida-plate { background: var(--paper-raised); border-radius: var(--radius-md); padding: var(--space-6); box-shadow: var(--shadow-paper); }
+  .tabbar { display: none; }
+  .wfline { margin-top: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--rule); font-size: 13px; line-height: 22px; color: var(--ink-muted); }
+  .sentlog { display: inline-flex; align-items: center; min-height: 32px; font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  .mini { display: none; margin-top: var(--space-3); font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; min-height: 44px; align-items: center; }
+
+  @media (max-width: 1080px) { .desk { grid-template-columns: minmax(0, 1fr); } .rail { padding-top: 0; } .insight { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); } .side { display: none; }
+    .desk { padding-inline: var(--space-4); padding-bottom: 96px; }
+    .greet h1 { font-size: 32px; line-height: 36px; }
+    .ida-decision__actions .ida-btn--primary { width: 100%; justify-content: center; }
+    .topbar { order: -2; } .mini { display: inline-flex; }
+    .tabbar { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--paper-raised); border-top: 1px solid var(--rule); }
+    .tabbar a { display: grid; place-items: center; min-height: 48px; font-size: 12px; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
+    .tabbar a[aria-current] { color: var(--ink); }
+  }
+
+
+.side { position: sticky; top: 0; height: 100vh; box-sizing: border-box; overflow-y: auto; align-self: start; }
+
+.donelist { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.donelist li { display: grid; grid-template-columns: 20px minmax(0,1fr); gap: var(--space-2); font-size: 14px; line-height: 20px; }
+.donelist small { display: block; font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+.tb { display: flex; gap: 8px; align-items: flex-end; height: 110px; padding-top: 4px; }
+.tb div { flex: 1; height: 100%; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; gap: 4px; }
+.tb i { align-self: end; width: 100%; border-radius: 3px 3px 0 0; background: color-mix(in srgb, var(--brand) 40%, transparent); }
+.tb div:last-child i { background: var(--brand); }
+.tb b { font-size: 12px; font-variant-numeric: tabular-nums; }
+.tb span { font-size: 11px; color: var(--ink-muted); white-space: nowrap; }
+.tbnote { margin: 0; font-size: 13px; line-height: 19px; color: var(--ink-muted); }
+@media (max-width: 1080px) { .rail { position: static; } }
+@media (max-width: 760px) { .side { position: static; height: auto; } }
+  .calm { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-2) 0 var(--space-4); }
+  .calm p { margin: 0; color: var(--ink-muted); }
+  .nextlist { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); width: 100%; max-width: 560px; }
+  .nextlist li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: var(--space-3); padding-top: var(--space-2); border-top: 1px solid var(--rule); font-size: 14px; line-height: 21px; }
+  .nextlist small { font-size: 13px; font-weight: 600; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+  @media (max-width: 760px) { .nextlist li { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+  .sent { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-bottom: var(--space-3); font-size: 14px; }
+  .sent b { font-weight: 600; }
+  .later { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; font-size: 14px; color: var(--ink-muted); }
+  .ida-letter__body[contenteditable="true"] { outline: 2px solid var(--brand); outline-offset: 6px; border-radius: 2px; }
+  .ida-letter__body:focus { outline-offset: 6px; }
+  .log .t a { color: var(--ink); }
+  .ida-decision__why a { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  .donelist a { color: var(--ink); }
+  .tw { margin-top: var(--space-6); }
+  .tw__h { margin: 0 0 var(--space-1); font-size: 13px; line-height: 18px; font-weight: 700; color: var(--ink-muted); }
+  .tw__days { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .tw__days > li { border-bottom: 1px solid var(--rule); }
+  .tw__i { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 52px 68px minmax(0, 1fr) auto; column-gap: var(--space-2); align-items: center; width: 100%; min-height: 36px; padding: 4px 0; font-size: 14px; line-height: 19px; color: var(--ink); }
+  button.tw__i, a.tw__i { cursor: pointer; }
+  button.tw__i:hover .tw__x, a.tw__i:hover .tw__x { text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  button.tw__i:focus-visible, a.tw__i:focus-visible { box-shadow: var(--focus-ring); border-radius: 4px; }
+  .tw__d { font-size: 13px; font-weight: 700; white-space: nowrap; }
+  .tw__t { font-size: 13px; color: var(--ink-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .tw__x { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tw__i .ida-chip, .tw__i .tw__blk { justify-self: end; grid-column: 4; }
+  .tw__more { border-bottom: 0 !important; }
+  .tw__more .ida-btn { min-height: 36px; padding-left: 0; }
+  .tw__none { font-size: 14px; color: var(--ink-muted); padding: var(--space-2) 0; }
+  @media (max-width: 760px) {
+    .tw { margin-top: var(--space-4); }
+    .tw__i { grid-template-columns: 44px 62px minmax(0, 1fr); }
+    .tw__i .ida-chip, .tw__i .tw__blk { grid-column: 3; justify-self: start; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav aria-label="Pages"><a href="./" aria-current="page">Today <span class="count">3</span></a><a href="handled.html">Being handled</a><a href="sent.html">Sent</a><a href="tasks.html">Tasks</a><a href="workflows.html">Workflows</a><a href="rules.html">Your rules</a><a href="apps.html">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+
+  <div class="desk">
+    <div class="topbar">
+      <span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Design mock · sample data · <a href="onboarding.html">see onboarding</a></span>
+      <label class="ask"><input id="ask" type="text" placeholder="Tell Ida something, or ask a question"></label>
+    </div>
+
+    <main class="ida-sheet">
+      <div class="ida-line greet">
+        <div class="ida-line__m day"><span><b>12</b>Mon</span></div>
+        <div class="ida-line__c" id="greet"></div>
+      </div>
+      <section class="ida-line tw" aria-labelledby="wk-h">
+        <div class="ida-line__m"></div>
+        <div class="ida-line__c"><h2 class="tw__h" id="wk-h">This week</h2><ol class="tw__days" id="week"></ol></div>
+      </section>
+      <div class="items" id="items"></div>
+    </main>
+
+    <aside class="rail">
+      <section id="work" class="ida-plate" aria-label="Your work"></section>
+      <section class="ida-plate donefor" aria-label="Done for you">
+        <h2 class="h">Done for you since yesterday</h2>
+        <ul class="donelist" id="donelog"></ul>
+        <a class="sentlog" href="sent.html" id="sentlink">See all messages Ida sent</a>
+      </section>
+      <section class="ida-plate" aria-label="Time back" id="timeback"></section>
+    </aside>
+  </div>
+  <nav class="tabbar" aria-label="Main"><a href="./" aria-current="page">Today</a><a href="handled.html">Handled</a><a href="sent.html">Sent</a><a href="tasks.html">Tasks</a><button type="button" class="tabbar__more" data-tabmore aria-haspopup="dialog" aria-expanded="false">More</button></nav>
+</div>
+<script src="ida-store.js"></script>
+<script src="ida-shell.js"></script>
+<script src="today.js"></script>
+<script src="ida-nav.js"></script>
+</body>
+</html>

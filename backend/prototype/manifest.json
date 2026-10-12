@@ -1,0 +1,39 @@
+{
+  "source": "site2",
+  "files": [
+    "apps.html",
+    "apps.js",
+    "comps.html",
+    "doc-view.css",
+    "doc-view.js",
+    "doc.html",
+    "ida-doctext.js",
+    "ida-shell.js",
+    "ida-store.js",
+    "ida-ui.css",
+    "ida.css",
+    "index.html",
+    "main.html",
+    "onboarding.html",
+    "onboarding.js",
+    "practice.html",
+    "practice.js",
+    "report.html",
+    "rules.html",
+    "rules.js",
+    "sent.html",
+    "sent.js",
+    "shell.css",
+    "tasks.html",
+    "tasks.js",
+    "today.js",
+    "workflows.html",
+    "workflows.js"
+  ],
+  "scriptHashes": [
+    "sha256-JbwsELKUSK0APlmrigvZmh1VJeU//w8yIyb8xgXgVPw=",
+    "sha256-cocrxK6ZTnt6aiLiTcAykkHfN5WH190VpA6rpfpc2tY=",
+    "sha256-fKJhgCG/y8IRsFjIKu+KOQBr9lkZKxBLE6MAwGqwVIQ=",
+    "sha256-rtIuRVdDgkrgq4bM5/mg28DMgjZTSvrz6GWs1pR1QJ8="
+  ]
+}

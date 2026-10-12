@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="ida.css">
+<meta charset="utf-8">
+<title>Ida · Onboarding (design mock)</title>
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="ida-ui.css">
+<style>
+  .ob-cmp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); align-items: start; }
+  .ob-cmp > div { display: grid; gap: var(--space-2); min-width: 0; }
+  .ob-cmp .ida-letter { max-width: none; }
+  .ob-cmp .ida-hand { font-size: 18px; }
+  .ida-onb .ida-app:first-child { border-top: 0; }
+  .ida-onb #missed select { min-height: 44px; }
+  @media (max-width: 900px) { .ob-cmp { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) { .ida-onb__foot div { flex-wrap: wrap; } }
+</style>
+</head>
+<body>
+<div class="app no-side">
+  <aside class="side" aria-label="Main" hidden>
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav><a href="./">Today <span class="count">3</span></a><a href="tasks.html">Tasks</a><a href="workflows.html">Workflows</a><a href="rules.html">Your rules</a><a href="apps.html">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+  <div class="desk">
+    <div class="topbar"><span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Design mock · sample data · <a href="./">skip to Today</a></span><label class="ask" hidden><input type="text" placeholder="Tell Ida something, or ask a question"></label></div>
+    <main class="ida-sheet ida-page">
+      <div class="ida-onb" id="onb"></div>
+    </main>
+    
+  </div>
+  <nav class="tabbar" aria-label="Main" hidden><a href="./">Today</a><a href="tasks.html">Tasks</a><a href="workflows.html">Workflows</a><a href="rules.html">Rules</a><a href="apps.html">Apps</a></nav>
+</div>
+<script src="ida-store.js"></script>
+<script src="ida-shell.js"></script>
+<script src="onboarding.js"></script>
+<a href="/signout" style="position:fixed;right:12px;bottom:12px;z-index:9999;font:500 13px/1.2 system-ui,sans-serif;color:inherit;opacity:.7">Sign out</a>
+</body>
+</html>

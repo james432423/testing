@@ -1,0 +1,55 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ida</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .brand { fill:var(--brand); }
+  .tint { fill:var(--brand-soft); }
+  .deep { fill:var(--ink); }
+  .mark { fill:var(--marker); }
+  .done { fill:var(--done); }
+  .blk { rx:var(--radius-md); }
+  .pill { rx:8px; }
+  .words { position:absolute; left:var(--space-6); right:var(--space-6); bottom:var(--space-6); max-width:440px; }
+  .name { margin:0; font-size:120px; line-height:.92; font-weight:700; letter-spacing:-.03em; color:var(--ink); }
+  .tag { margin:var(--space-2) 0 0 6px; font-size:14px; line-height:20px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      brand 168×256 slab bled off the top (the brand, largest) · brand-soft 144×192 (the paper tint) · ink 128×224 bleeding off the right edge · marker 144×40 (the one accent) · done 56×16 once (it only ever means finished) — about 30% of 960×288
+  arrangement one tall brand slab with satellites, bottoms aligned space-6 above the edge, space-4 gutters
+  pattern     highlighter swipes, from "a marker swipe behind the words that matter": space-4-tall marker pills tilted 4° crossing the slab and the ink block, as a hand would drag a highlighter
+  scales      sides in space-2 multiples; gutters space-4; swipe height space-4 with rx 8 (half of it); block corners radius-md; done pill rx radius-full
+-->
+<rect class="brand blk" x="24" y="-16" width="168" height="256" rx="10"/>
+<rect class="done pill" x="24" y="256" width="56" height="16" rx="8"/>
+<rect class="tint blk" x="208" y="72" width="144" height="192" rx="10"/>
+<rect class="mark blk" x="208" y="16" width="144" height="40" rx="10"/>
+<rect class="deep blk" x="368" y="40" width="128" height="224" rx="10"/>
+<g transform="rotate(-4 240 150)">
+  <rect class="mark pill" x="40" y="96" width="120" height="16" rx="8"/>
+  <rect class="mark pill" x="56" y="136" width="88" height="16" rx="8"/>
+  <rect class="mark pill" x="40" y="176" width="136" height="16" rx="8"/>
+  <rect class="mark pill" x="224" y="120" width="104" height="16" rx="8"/>
+  <rect class="mark pill" x="384" y="168" width="96" height="16" rx="8"/>
+</g>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Ida</h1>
+<p class="tag">Your back office, handled. You just approve.</p>
+</div>
+</div>
+</body>
+</html>

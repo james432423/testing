@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <title>Ida - Closed (oat, small)</title>
+  <rect width="24" height="24" rx="5.3" fill="#eeeae3"/>
+  <path d="M12 3.6 21 11.2h-2.6v8.6H5.6v-8.6H3z" fill="#1f5a43" stroke="#1f5a43" stroke-width="1" stroke-linejoin="round"/>
+  <path d="M8.6 14.3c1 .7 1.8 1.6 2.4 2.8 1.2-2.6 2.6-4.3 4.5-5.6" fill="none" stroke="#eeeae3" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

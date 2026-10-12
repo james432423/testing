@@ -1,0 +1,6 @@
+/** Public liveness check. Reveals nothing about configuration or data. */
+export const dynamic = 'force-dynamic';
+
+export function GET(): Response {
+  return Response.json({ ok: true }, { headers: { 'cache-control': 'no-store' } });
+}

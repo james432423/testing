@@ -1,0 +1,61 @@
+<!-- @dsCard group="Screens" height=1300 width=1240 page subtitle="Plain-language rules Ida follows, where each came from, and rules Ida suggests from your edits." -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rules — preview</title>
+<style>
+  body { background: var(--paper-sunk); }
+  .app { display: grid; grid-template-columns: 200px minmax(0, 1fr); min-height: 1100px; }
+  .side { padding: var(--space-6) var(--space-4) var(--space-8) var(--space-6); display: flex; flex-direction: column; gap: var(--space-8); }
+  .side .ida-mark { min-height: 44px; display: flex; align-items: center; }
+  .side nav { display: grid; gap: 2px; }
+  .side a { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 0 var(--space-3); margin-left: calc(var(--space-3) * -1); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; }
+  .side a:hover { background: var(--paper-raised); }
+  .side a[aria-current="page"] { font-weight: 700; background: var(--paper-raised); box-shadow: var(--shadow-paper); }
+  .count { min-width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; background: var(--brand-fill); color: var(--on-brand); }
+  .who { margin-top: auto; display: grid; gap: 2px; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .who strong { color: var(--ink); font-weight: 600; font-size: 14px; }
+  .desk { min-width: 0; padding-block: var(--space-6) var(--space-12); padding-inline: var(--space-4) var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--space-4) var(--space-8); align-content: start; }
+  .topbar { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between; min-height: 44px; }
+  .example { font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .ask { flex: 0 1 360px; display: flex; align-items: center; min-height: 44px; box-sizing: border-box; border: 1px solid var(--line-strong); background: var(--paper-raised); border-radius: var(--radius-sm); padding: 0 var(--space-3); font-size: 15px; }
+  .ask input { all: unset; flex: 1; min-width: 0; color: var(--ink); }
+  .ask input::placeholder { color: var(--ink-muted); }
+  .rail { display: grid; gap: var(--space-6); align-content: start; }
+  .tabbar { display: none; }
+  @media (max-width: 1080px) { .desk { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); } .side { display: none; }
+    .desk { padding-inline: var(--space-4); padding-bottom: 96px; }
+    .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--paper-raised); border-top: 1px solid var(--rule); }
+    .tabbar a { display: grid; place-items: center; min-height: 48px; font-size: 12px; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
+    .tabbar a[aria-current] { color: var(--ink); }
+  }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav><a href="#">Today <span class="count">3</span></a><a href="#">Tasks</a><a href="#">Workflows</a><a href="#" aria-current="page">Your rules</a><a href="#">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+  <div class="desk">
+    <div class="topbar"><span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Sample data</span><label class="ask"><input type="text" placeholder="Tell Ida something, or ask a question"></label></div>
+    <main class="ida-sheet ida-page">
+      <header class="ida-pagehead"><div><h1>Your rules</h1><p>Ida follows these on every task. Add one in your own words.</p></div></header>
+      <form class="ida-addrule" onsubmit="return false"><label for="newrule" class="h">Add a rule</label><div><input id="newrule" type="text" placeholder="For example: never text clients after 8 pm"><button class="ida-btn ida-btn--primary" type="submit">Add rule</button></div><small>Ida shows you how it understood the rule before it takes effect.</small></form>
+      <section class="ida-rulegroup"><h2>Always ask me first</h2><ul><li class="ida-rule"><span class="ida-rule__t"><b>Before quoting a price, a fee or a commission</b><small>You added this · Sep 2</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li><li class="ida-rule"><span class="ida-rule__t"><b>Before sending anything to a seller about an offer</b><small>You added this · Sep 2</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li><li class="ida-rule"><span class="ida-rule__t"><b>Before booking anything on a Sunday</b><small>Learned from your edit · Oct 4</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li><li class="ida-rule"><span class="ida-rule__t"><b>Before changing any contract date</b><small>You added this · Sep 2</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li><li class="ida-rule"><span class="ida-rule__t"><b>Before contacting anyone not already on the deal</b><small>You added this · Sep 2</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li></ul></section>
+      <section class="ida-rulegroup"><h2>Never</h2><ul><li class="ida-rule"><span class="ida-rule__t"><b>Promise a closing date or a timeline</b><small>You added this · Sep 2</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li><li class="ida-rule"><span class="ida-rule__t"><b>Share one client's details with another client</b><small>Ida's default · always on</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li></ul></section>
+      <section class="ida-rulegroup"><h2>How you write</h2><ul><li class="ida-rule"><span class="ida-rule__t"><b>Sign emails "Dana", not "Dana Reyes, Realtor"</b><small>Learned from 3 of your edits</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li><li class="ida-rule"><span class="ida-rule__t"><b>Keep client updates under 120 words</b><small>Learned from your edit · Sep 18</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li><li class="ida-rule"><span class="ida-rule__t"><b>Call the Parks "Jen and Tom"</b><small>Learned from your edit · Oct 1</small></span><span class="ida-rule__acts"><button class="ida-btn ida-btn--quiet" type="button">Edit</button><label class="ida-switch"><input type="checkbox" checked aria-label="Rule on"><i></i></label></span></li></ul></section>
+
+    </main>
+    <aside class="rail"><section class="ida-panel"><h2 class="h">Ida learned from you</h2><p class="muted">When you edit a draft, Ida suggests a rule. Nothing changes until you accept it.</p>
+<div class="ida-learn"><p>You added the property address to the subject line in 4 drafts.</p><b>Always put the address in the subject?</b><div><button class="ida-btn" type="button">Make it a rule</button><button class="ida-btn ida-btn--quiet" type="button">Not now</button></div></div></section></aside>
+  </div>
+  <nav class="tabbar" aria-label="Main"><a href="#">Today</a><a href="#">Tasks</a><a href="#">Workflows</a><a href="#" aria-current>Your rules</a></nav>
+</div>
+</body>
+</html>

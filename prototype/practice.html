@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ida · Appraisal check practice (design mock)</title>
+<link rel="stylesheet" href="ida.css">
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="ida-ui.css">
+<style>
+  .crumb { font-size: 13px; font-weight: 600; color: var(--ink-muted); }
+  .crumb a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  .ida-pagehead h1 { text-wrap: balance; }
+  .ctx { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); align-items: center; padding-bottom: var(--space-4); border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-muted); }
+  .ctx b { color: var(--ink); font-weight: 600; }
+
+  .cmp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); align-items: start; }
+  .col { display: grid; gap: var(--space-3); min-width: 0; }
+  .col__h { display: grid; gap: 2px; }
+  .col__h h2 { margin: 0; font-size: 17px; line-height: 24px; font-weight: 700; }
+  .col__h small { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .col .ida-letter { max-width: none; }
+  .col .ida-letter ul { margin: 0 0 var(--space-2); padding-left: 20px; }
+  .col .ida-letter li { margin-bottom: 2px; }
+  .col .ida-hand { font-size: 18px; }
+
+  /* Differences: a numbered tag plus a dotted ink underline. No new color; the number is matched in the list below. */
+  .d { text-decoration: underline dotted var(--ink); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+  .dn { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin: 0 3px 0 1px; padding: 0 4px; box-sizing: border-box; border-radius: 4px; background: var(--ink); color: var(--paper); font-size: 11px; line-height: 1; font-weight: 700; vertical-align: 2px; font-variant-numeric: tabular-nums; }
+  .gap { display: block; margin: var(--space-2) 0; padding: var(--space-1) var(--space-2); border: 1px dashed var(--line-strong); border-radius: 4px; font-size: 13px; line-height: 19px; color: var(--ink-muted); }
+
+  .diffs h2 { margin: 0 0 var(--space-2); font-size: 18px; line-height: 26px; font-weight: 700; display: flex; justify-content: space-between; gap: var(--space-3); align-items: baseline; flex-wrap: wrap; }
+  .diffs h2 span { font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .diffs ol { list-style: none; margin: 0; padding: 0; }
+  .diffs li { display: grid; grid-template-columns: 28px minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-4); padding: var(--space-3) 0; border-top: 1px solid var(--rule); font-size: 14px; line-height: 21px; }
+  .diffs li > .dn { margin: 2px 0 0; }
+  .diffs li b { display: block; font-size: 12px; line-height: 18px; font-weight: 700; color: var(--ink-muted); }
+  .diffs li.same { color: var(--ink-muted); }
+  .diffs .tick { display: inline-flex; gap: var(--space-2); align-items: center; grid-column: 2 / -1; }
+  .diffs .tick .ida-tick { width: 18px; height: 18px; }
+
+  .verdict { display: grid; gap: var(--space-3); padding-top: var(--space-6); border-top: 1px solid var(--rule); }
+  .verdict h2 { margin: 0; font-size: 21px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; }
+  .verdict > p { margin: 0; color: var(--ink-muted); max-width: 62ch; }
+  .vbtns { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .vbtns .ida-btn { min-width: 160px; justify-content: center; font-size: 15px; }
+  .vbtns .ida-btn[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .reason { display: grid; gap: var(--space-3); padding: var(--space-4); background: var(--paper-well); border-radius: var(--radius-sm); max-width: 640px; box-sizing: border-box; }
+  .reason fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .reason legend { font-weight: 600; margin-bottom: var(--space-2); padding: 0; }
+  .reason label.opt { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-3); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--paper-raised); font-size: 14px; cursor: pointer; }
+  .reason label.opt:has(input:checked) { border-color: var(--ink); font-weight: 600; }
+  .reason input[type="checkbox"] { accent-color: var(--brand-fill); margin: 0; }
+  .reason textarea { font: inherit; font-size: 15px; min-height: 72px; box-sizing: border-box; width: 100%; padding: var(--space-2) var(--space-3); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--paper-raised); color: var(--ink); resize: vertical; }
+  .reason textarea:focus { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+  .reason small { font-size: 13px; color: var(--ink-muted); }
+  .saved { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); align-items: center; padding: var(--space-3) var(--space-4); background: var(--paper-well); border-radius: var(--radius-sm); max-width: 640px; box-sizing: border-box; font-size: 15px; }
+  .saved .ida-tick { width: 20px; height: 20px; }
+  .saved span { flex: 1 1 260px; }
+
+  .rec { display: grid; grid-template-columns: minmax(0, 1.1fr) 240px minmax(0, 1.3fr); gap: var(--space-6); align-items: start; padding: var(--space-4) 0 var(--space-6); border-bottom: 1px solid var(--rule); }
+  .rec__sum { display: grid; gap: var(--space-1); }
+  .rec__sum .muted { margin-top: var(--space-1); }
+  .rec .rec__steps { margin-top: 30px; }
+  @media (max-width: 1080px) { .rec { grid-template-columns: minmax(0, 1fr) 240px; } .rec__runs { grid-column: 1 / -1; } }
+  @media (max-width: 760px) { .rec { grid-template-columns: minmax(0, 1fr); } .rec .rec__steps { margin-top: 0; } }
+  
+  .rec__big { font-size: 28px; line-height: 32px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .rec__of { font-size: 14px; color: var(--ink-muted); margin-left: var(--space-1); letter-spacing: 0; font-weight: 400; }
+  .rec__steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; list-style: none; margin: 0; padding: 0; }
+  .rec__steps li { height: 34px; border-radius: var(--radius-sm); border: 1.5px solid var(--line-strong); display: grid; place-items: center; box-sizing: border-box; font-size: 12px; font-weight: 700; color: var(--ink-muted); }
+  .rec__steps li.ok { border-color: var(--done); color: var(--done); background: var(--done-soft); }
+  .rec__steps li.ok .ida-tick { width: 18px; height: 18px; }
+  .rec__steps li.now { border-style: dashed; border-color: var(--ink); color: var(--ink); }
+  .rec__steps li.miss { border-color: var(--rule); color: var(--ink-muted); background: var(--paper-sunk); }
+  .rec__runs { list-style: none; margin: 0; padding: 0; display: grid; font-size: 14px; line-height: 20px; }
+  .rec__runs li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2); padding: var(--space-2) 0; border-top: 1px solid var(--rule); }
+  .rec__runs small { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+  .rec__runs span small { display: block; white-space: normal; }
+
+  @media (max-width: 900px) {
+    .cmp { grid-template-columns: minmax(0, 1fr); }
+    .diffs li { grid-template-columns: 24px minmax(0, 1fr); gap: var(--space-1) var(--space-3); }
+    .diffs li > :nth-child(3) { grid-column: 2; }
+  }
+  @media (max-width: 760px) { .vbtns .ida-btn { flex: 1 1 140px; min-width: 0; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav aria-label="Pages"><a href="./">Today <span class="count">3</span></a><a href="handled.html">Being handled</a><a href="sent.html">Sent</a><a href="tasks.html">Tasks</a><a href="workflows.html" aria-current="page">Workflows</a><a href="rules.html">Your rules</a><a href="apps.html">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+  <div class="desk">
+    <div class="topbar"><span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Design mock · sample data · <a href="onboarding.html">see onboarding</a></span><label class="ask"><input type="text" placeholder="Tell Ida something, or ask a question"></label></div>
+    <main class="ida-sheet ida-page">
+      <span class="crumb" id="crumb"></span>
+      <header class="ida-pagehead"><div><h1 id="ph1">Does Ida's draft sound like you?</h1><p id="pp">Ida practiced on the 17 Ash St appraisal. Nothing was sent; compare it with what you wrote.</p></div></header>
+      <p class="ctx" id="ctx"><span><b>17 Ash St</b> · Luis and Ana Garcia, sellers</span><span>Appraisal came in Sat at $612,000</span><span>Contract price $625,000</span></p>
+
+      <section class="rec" id="rec" aria-label="Practice record"></section>
+
+      <section class="cmp" id="cmp" aria-label="Side by side">
+        <div class="col">
+          <div class="col__h"><h2>Ida's draft</h2><small>Practice · drafted Sat 5:10 pm · not sent</small></div>
+          <div class="ida-letter">
+            <dl><dt>To</dt><dd>Luis and Ana Garcia</dd><dt>Subject</dt><dd>The appraisal for 17 Ash St came in low</dd></dl>
+            <p>Hi Luis and Ana,</p>
+            <p>The buyers' appraisal came back at <span role="button" tabindex="0" class="ida-marker ida-cite" aria-expanded="true" aria-controls="src">$612,000, which is $13,000 under the contract price</span>. Here are your options:</p>
+            <ul>
+              <li>Ask the buyers to cover the $13,000 in cash</li>
+              <li>Lower the price to $612,000</li>
+              <li>Ask the appraiser to reconsider, using recent sales</li>
+            </ul>
+            <p><span class="dn" aria-label="Difference 1">1</span><span class="gap">No recommendation</span></p>
+            <p><span class="d"><span class="dn" aria-label="Difference 2">2</span>I've attached the 3 sales the appraiser used</span> so you can see how they compare with your home.</p>
+            <p><span class="d"><span class="dn" aria-label="Difference 3">3</span>Let me know which option you'd like to pursue.</span></p>
+            <p>Best regards,<br>Dana Reyes · Reyes Realty</p>
+          </div>
+          <span class="ida-hand">from the appraisal report, page 2</span>
+          <div class="ida-source ida-source--card" id="src">
+            <div class="ida-source__doc"><span class="ida-source__icon" aria-hidden="true">PDF</span><span><b>Appraisal report</b><small>17 Ash St · Valley Appraisal Group · Oct 10 · page 2 of 24</small></span></div>
+            <blockquote>"Indicated value by sales comparison approach: <u>$612,000</u>." Contract price stated on page 1: $625,000.</blockquote>
+            <a class="ida-source__link" href="doc.html?d=ash-appraisal" data-doc="ash-appraisal">Open the report at page 2<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg></a>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="col__h"><h2>What you sent</h2><small>From your email · Sun 9:42 am</small></div>
+          <div class="ida-letter">
+            <dl><dt>To</dt><dd>Luis and Ana Garcia</dd><dt>Subject</dt><dd>17 Ash St appraisal</dd></dl>
+            <p>Hi Luis and Ana,</p>
+            <p>The appraisal came in at $612,000, $13,000 under our price. You have a few options: the buyers cover the gap, we drop the price, or we challenge the appraisal.</p>
+            <p><span class="d"><span class="dn" aria-label="Difference 1">1</span>My recommendation is to offer to split it, $6,500 each.</span> The buyers have 20% down, so they can likely cover their half.</p>
+            <p><span class="d"><span class="dn" aria-label="Difference 2">2</span>I can walk you through the comps on a call.</span></p>
+            <p><span class="d"><span class="dn" aria-label="Difference 3">3</span>Free tonight after 6?</span></p>
+            <p>Dana</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="diffs" id="diffs" aria-label="What's different">
+        <h2>What's different <span>3 differences · the facts match</span></h2>
+        <ol>
+          <li><span class="dn">1</span><span><b>Ida</b>Listed the three options and stopped.</span><span><b>You</b>Recommended splitting the $13,000 and said why.</span></li>
+          <li><span class="dn">2</span><span><b>Ida</b>Attached the appraiser's 3 comparable sales.</span><span><b>You</b>Offered to go through the comps on a call.</span></li>
+          <li><span class="dn">3</span><span><b>Ida</b>Formal close: "Let me know which option…", "Best regards".</span><span><b>You</b>Asked for a time tonight and signed "Dana".</span></li>
+          <li class="same"><span class="tick"><svg class="ida-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>Same in both: the appraised value, the $13,000 gap and the three options.</span></li>
+        </ol>
+      </section>
+
+      <section class="verdict" id="verdict" aria-label="Your verdict">
+        <h2>Is this how you'd handle it?</h2>
+        <p>Your answer only shapes Ida's next practice draft. Nothing is sent either way. When 5 in a row look right, Ida suggests moving Appraisal check to You approve; you decide.</p>
+        <div class="vbtns" id="vbtns">
+          <button class="ida-btn" type="button" data-v="right" aria-pressed="false">Looks right</button>
+          <button class="ida-btn" type="button" data-v="not" aria-pressed="false">Not like me</button>
+        </div>
+        <form class="reason" id="reason" hidden>
+          <fieldset><legend>What's not like you?</legend>
+            <label class="opt"><input type="checkbox" checked>I'd recommend one option</label>
+            <label class="opt"><input type="checkbox">Too formal</label>
+            <label class="opt"><input type="checkbox">I'd rather call than attach</label>
+            <label class="opt"><input type="checkbox">A fact is wrong</label>
+          </fieldset>
+          <label style="display:grid;gap:var(--space-1);font-size:13px;font-weight:600;color:var(--ink-muted)">Anything else (optional)<textarea placeholder="For a low appraisal I usually suggest splitting the gap first."></textarea></label>
+          <div class="vbtns"><button class="ida-btn" type="submit">Save my answer</button><button class="ida-btn ida-btn--quiet" type="button" id="cancel">Cancel</button></div>
+          <small>Ida may suggest a rule from this on Your rules. It won't add one without asking.</small>
+        </form>
+        <div id="saved" hidden></div>
+      </section>
+    </main>
+
+  </div>
+  <nav class="tabbar" aria-label="Main"><a href="./">Today</a><a href="handled.html">Handled</a><a href="sent.html">Sent</a><a href="tasks.html">Tasks</a><button type="button" class="tabbar__more is-current" data-tabmore aria-haspopup="dialog" aria-expanded="false" aria-label="More pages, now on Workflows">More</button></nav>
+</div>
+<script src="ida-store.js"></script>
+<script src="ida-shell.js"></script>
+<script src="practice.js"></script>
+<script src="ida-nav.js"></script>
+</body>
+</html>

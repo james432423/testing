@@ -1,0 +1,275 @@
+<link rel="stylesheet" href="ida.css">
+<title>Ida Prototype</title>
+<style>
+  body { background: var(--paper-sunk); }
+  .app { display: grid; grid-template-columns: 200px minmax(0, 1fr); min-height: 1400px; }
+  .side { padding: var(--space-6) var(--space-4) var(--space-8) var(--space-6); display: flex; flex-direction: column; gap: var(--space-8); }
+  .side nav { display: grid; gap: 2px; }
+  .side a { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 0 var(--space-3); margin-left: calc(var(--space-3) * -1); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; }
+  .side a:hover { background: var(--paper-raised); }
+  .side a[aria-current="page"] { font-weight: 700; background: var(--paper-raised); box-shadow: var(--shadow-paper); }
+  .count { min-width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; background: var(--brand-fill); color: var(--on-brand); font-variant-numeric: tabular-nums; }
+  .side .ida-mark { min-height: 44px; display: flex; align-items: center; }
+  .who { margin-top: auto; display: grid; gap: 2px; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .who strong { color: var(--ink); font-weight: 600; font-size: 14px; }
+
+  .desk { min-width: 0; padding-block: var(--space-6) var(--space-12); padding-inline: var(--space-4) var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-4) var(--space-8); align-content: start; }
+  .topbar { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between; }
+  .example { font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .ask { flex: 0 1 360px; display: flex; align-items: center; min-height: 44px; box-sizing: border-box; border: 1px solid var(--line-strong); background: var(--paper-raised); border-radius: var(--radius-sm); padding: 0 var(--space-3); font-size: 15px; }
+  .ask input { all: unset; flex: 1; min-width: 0; color: var(--ink); }
+  .ask input::placeholder { color: var(--ink-muted); }
+  .ask:focus-within { box-shadow: var(--focus-ring); }
+
+  .greet h1 { margin: 0; font-size: 40px; line-height: 44px; font-weight: 700; letter-spacing: -0.025em; }
+  .greet p { margin: var(--space-2) 0 0; font-size: 19px; line-height: 27px; max-width: 46ch; }
+  .day { font-weight: 700; font-size: 13px; line-height: 16px; color: var(--ink-muted); text-align: right; padding-top: 6px; }
+  .day b { display: block; font-size: 28px; line-height: 30px; color: var(--ink); letter-spacing: -0.02em; }
+  .h { margin: 0; font-size: 17px; line-height: 24px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+  .items { display: grid; gap: var(--space-8); margin-top: var(--space-8); }
+  .fix { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-start; } .fix .ida-chip { margin-top: 2px; }
+  .fix p { margin: 0; flex: 1 1 260px; }
+  .fix b { font-weight: 600; }
+  .ida-circle { color: var(--ink); }
+  .waiting { font-size: 13px; color: var(--ink-muted); }
+
+  .insight { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); align-items: center; background: var(--paper-sunk); border-radius: var(--radius-md); padding: var(--space-6); }
+  .insight .k { font-size: 13px; font-weight: 600; color: var(--ink-muted); }
+  .insight h3 { margin: var(--space-1) 0 var(--space-2); font-size: 19px; line-height: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  .insight p { margin: 0 0 var(--space-4); color: var(--ink); }
+  .chart { display: grid; gap: var(--space-2); }
+  .bars { display: flex; align-items: flex-end; gap: 10px; height: 96px; max-width: 360px; border-bottom: 1px solid var(--line-strong); }
+  .bars div { flex: 1; display: grid; justify-items: center; gap: 4px; align-content: end; height: 100%; }
+  .bars i { display: block; width: 100%; border-radius: 3px 3px 0 0; background: var(--rule); }
+  .bars div:last-child i { background: var(--brand); }
+  .bars b { font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .wk { display: flex; gap: 10px; max-width: 360px; font-size: 11px; color: var(--ink-muted); }
+  .wk span { flex: 1; text-align: center; }
+  .chart small { font-size: 12px; color: var(--ink-muted); }
+
+  .log { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-3); }
+  .log .t { display: grid; grid-template-columns: minmax(0, 1fr) 72px; gap: var(--space-3); align-items: baseline; }
+  .log .t small { font-size: 13px; color: var(--ink-muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .dd { font-size: 13px; line-height: 23px; font-weight: 700; color: var(--ink-muted); }
+  .flag { display: inline-flex; margin-left: var(--space-2); vertical-align: 1px; }
+
+  .rail { display: grid; gap: var(--space-6); align-content: start; }
+  .ida-plate { background: var(--paper-raised); border-radius: var(--radius-md); padding: var(--space-6); box-shadow: var(--shadow-paper); }
+  .tabbar { display: none; }
+  .wfline { margin-top: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--rule); font-size: 13px; line-height: 22px; color: var(--ink-muted); }
+  .sentlog { display: inline-flex; align-items: center; min-height: 32px; font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  .mini { display: none; margin-top: var(--space-3); font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; min-height: 44px; align-items: center; }
+
+  @media (max-width: 1080px) { .desk { grid-template-columns: minmax(0, 1fr); } .rail { padding-top: 0; } .insight { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); } .side { display: none; }
+    .desk { padding-inline: var(--space-4); padding-bottom: 96px; }
+    .greet h1 { font-size: 32px; line-height: 36px; }
+    .ida-decision__actions .ida-btn--primary { width: 100%; justify-content: center; }
+    .topbar { order: -2; } .mini { display: inline-flex; }
+    .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--paper-raised); border-top: 1px solid var(--rule); }
+    .tabbar a { display: grid; place-items: center; min-height: 48px; font-size: 12px; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
+    .tabbar a[aria-current] { color: var(--ink); }
+  }
+
+.ida-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 60; width: min(500px, 100%); display: grid; grid-template-rows: auto 1fr auto; background: var(--paper-raised); box-shadow: var(--shadow-lift); border-left: 1px solid var(--rule); }
+.ida-drawer__head { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--rule); padding-top: calc(var(--space-3) + env(safe-area-inset-top, 0px)); }
+.ida-drawer__head b { display: block; font-weight: 600; } .ida-drawer__head small { display: block; font-size: 13px; color: var(--ink-muted); }
+.ida-drawer__head > span:nth-child(2) { flex: 1; min-width: 0; }
+.ida-drawer iframe { width: 100%; height: 100%; border: 0; background: var(--paper-sunk); }
+.ida-drawer__foot { padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule); font-size: 13px; color: var(--ink-muted); display: flex; gap: var(--space-3); align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.ida-drawer__foot a { color: var(--ink); font-weight: 600; }
+@media (min-width: 1101px) { body.has-drawer .app { margin-right: 500px; } body.has-drawer .rail { display: none; } body.has-drawer .desk { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) { .ida-drawer { width: 100%; } }
+</style>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav>
+      <a href="./" aria-current="page">Today <span class="count">3</span></a>
+      <a href="tasks.html">Tasks</a>
+      <a href="workflows.html">Workflows</a>
+      <a href="rules.html">Your rules</a>
+      <a href="apps.html">Connected apps</a>
+    </nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+
+  <div class="desk">
+    <div class="topbar">
+      <span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Design mock · sample data · <a href="onboarding.html">see onboarding</a></span>
+      <label class="ask"><input id="ask" type="text" placeholder="Tell Ida something, or ask a question"></label>
+    </div>
+
+    <main class="ida-sheet">
+      <div class="ida-line greet">
+        <div class="ida-line__m day"><span><b>12</b>Mon</span></div>
+        <div class="ida-line__c">
+          <h1>3 things need you</h1>
+          <p>About 2 minutes, Dana. 1 fix and 2 decisions; everything else is handled.</p>
+          <a class="mini" href="tasks.html">9 of 14 tasks off your plate</a>
+        </div>
+      </div>
+
+      <div class="items">
+        <div class="ida-line row">
+          <div class="ida-line__m mm"><span class="ida-circle" aria-label="Item 1">1<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27 5.5C17 2.5 5.5 8 5 19.5S13.5 36 22.5 35s13.2-8.5 12-17.5C33.6 10.5 27.5 6 19 7.2"/></svg></span><span class="mt">Fix · 30 sec</span></div>
+          <div class="ida-line__c rowc">
+            <span><span class="ida-chip ida-chip--problem">Problem</span> <b>Google Calendar disconnected</b><small>Opens after you reconnect: Book a showing for Marcus Lee, Wed 2:30 pm</small></span>
+            <button class="ida-btn" type="button">Reconnect</button>
+          </div>
+        </div>
+        <div class="ida-line">
+          <div class="ida-line__m"></div>
+          <section class="ida-line__c ida-pile" aria-label="Decisions">
+            <article class="ida-pile__card">
+              <header class="ida-pile__head"><span class="ida-circle sm" aria-hidden="true">2<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27 5.5C17 2.5 5.5 8 5 19.5S13.5 36 22.5 35s13.2-8.5 12-17.5C33.6 10.5 27.5 6 19 7.2"/></svg></span><span>Approve · 1 min</span><span class="ida-pile__pos">Decision 1 of 2</span></header>
+              <article class="ida-decision">
+            <span class="ida-decision__meta">412 Linden Ct · Parks family · closing Thursday</span>
+            <h2 class="ida-decision__q">Send the inspection summary to the Parks?</h2>
+            <div class="ida-letter">
+              <dl><dt>To</dt><dd>Jen and Tom Park</dd><dt>Subject</dt><dd>Inspection results for 412 Linden Ct</dd></dl>
+              <p>Hi Jen and Tom,</p>
+              <p>The inspection is back. The roof and furnace look good. The inspector found the <span role="button" tabindex="0" class="ida-marker ida-cite" aria-expanded="true" aria-controls="src-1">back deck railing loose at two posts and recommends repair before closing</span>. I'll include it in our repair request to the sellers.</p>
+              <p>Dana</p>
+            </div>
+              <div class="ida-source ida-source--card" id="src-1">
+                <div class="ida-source__doc"><span class="ida-source__icon" aria-hidden="true">PDF</span><span><b>Home inspection report</b><small>412 Linden Ct · Bay Area Inspections · Oct 11 · page 4 of 31</small></span></div>
+                <blockquote>"<u>Rear deck guardrail is loose at two posts and does not meet height requirements. Recommend repair by a qualified contractor prior to closing.</u>"</blockquote>
+                <a class="ida-source__link" href="report.html#page-4">Open the report at page 4<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg></a>
+              </div>
+            
+            <div class="ida-decision__actions">
+              <button class="ida-btn ida-btn--primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>Approve and send</button>
+              <button class="ida-btn" type="button">Edit first</button>
+              <button class="ida-btn ida-btn--quiet" type="button">Not now</button>
+            </div>
+            <span class="ida-decision__fine">Nothing goes out until you approve, and you can undo for 10 seconds after.</span>
+          </article>
+            </article>
+            <div class="ida-pile__tab" role="group" aria-label="Up next">
+              <span class="ida-circle sm" aria-hidden="true">3<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27 5.5C17 2.5 5.5 8 5 19.5S13.5 36 22.5 35s13.2-8.5 12-17.5C33.6 10.5 27.5 6 19 7.2"/></svg></span>
+              <span class="ida-pile__t"><span class="ida-pile__up">Up next · Ask · 10 sec</span><b>HOA payoff letter missing for Thursday's closing</b><small>412 Linden Ct · The HOA isn't on this deal yet, so Ida asks first (your rule)</small></span>
+              <span class="ida-pile__acts"><span class="ida-chip ida-chip--attention">Needs you</span><button class="ida-btn" type="button">Ask the HOA</button><button class="ida-pile__open" type="button" aria-label="Open this decision"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button></span>
+            </div>
+          </section>
+        </div>
+        <div class="ida-line">
+          <div class="ida-line__m"></div>
+          <section class="ida-line__c insight" aria-label="Worth a look">
+            <div>
+              <span class="k">Worth a look · 17 Ash St</span>
+              <h3>Showings dropped from 9 to 3 in a month</h3>
+              <div class="chart" role="img" aria-label="Showings per week: 9, 7, 5, 3">
+              <div class="bars"><div><b>9</b><i style="height:72px"></i></div><div><b>7</b><i style="height:56px"></i></div><div><b>5</b><i style="height:40px"></i></div><div><b>3</b><i style="height:24px"></i></div></div>
+              <div class="wk"><span>Sep 14</span><span>Sep 21</span><span>Sep 28</span><span>Oct 5</span></div>
+              <small>Showings per week</small>
+            </div>
+              <p>Two similar homes within half a mile cut their price by about 4% in the last two weeks. Ida can draft a price-review note for the Garcias with the comparison attached.</p>
+              <div class="ida-decision__actions"><button class="ida-btn" type="button">Draft the note</button><button class="ida-btn ida-btn--quiet" type="button">See the comparison</button></div>
+            </div>
+            
+          </section>
+        </div>
+      </div>
+
+      <hr>
+      <div class="ida-line"><div class="ida-line__m"></div><div class="ida-line__c"><h2 class="h">Done since yesterday</h2><a class="sentlog" href="#">See all 12 messages Ida sent</a></div></div>
+      <ul class="log">
+        <li class="ida-line"><div class="ida-line__m"><svg class="ida-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg></div><div class="ida-line__c t"><span>Reminded the title company and both agents that the 17 Ash St option period ends Wednesday.</span><small>9:05 am</small></div></li>
+        <li class="ida-line"><div class="ida-line__m"><svg class="ida-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg></div><div class="ida-line__c t"><span>Chased the Parks' lender for the appraisal date. It's set for Tuesday.</span><small>8:40 am</small></div></li>
+        <li class="ida-line"><div class="ida-line__m"><svg class="ida-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg></div><div class="ida-line__c t"><span>Filed the signed counteroffer for 17 Ash St and sent a copy to the title company.</span><small>Sun</small></div></li>
+      </ul>
+
+      <hr>
+      <div class="ida-line"><div class="ida-line__m"></div><div class="ida-line__c"><h2 class="h">Coming up</h2></div></div>
+      <ul class="log">
+        <li class="ida-line"><div class="ida-line__m"><span class="dd">Tue</span></div><div class="ida-line__c t"><span>Appraisal at 412 Linden Ct</span><small>10:00 am</small></div></li>
+        <li class="ida-line"><div class="ida-line__m"><span class="dd">Wed</span></div><div class="ida-line__c t"><span>Option period ends on 17 Ash St. Repair request is drafted.</span><small>5:00 pm</small></div></li>
+        <li class="ida-line"><div class="ida-line__m"><span class="dd">Thu</span></div><div class="ida-line__c t"><span>Closing at 412 Linden Ct <span class="flag ida-chip ida-chip--attention">Needs you · item 3</span></span><small>2:00 pm</small></div></li>
+      </ul>
+    </main>
+
+    <aside class="rail">
+      <section id="work" class="ida-plate" aria-label="9 of 14 recurring tasks are off your plate">
+  <h2 class="h">Your work</h2>
+  <div class="ida-plate__head"><span class="ida-plate__big">9 of 14</span><span class="ida-plate__of">tasks off your plate</span></div>
+  <span class="ida-plate__sub">About 4 hours back this week</span><span class="ida-plate__sub">6 decisions for you this week, down from 11</span>
+  <div class="ida-plate__rows"><div class="ida-plate__row"><span>Leads <small>1/2</small></span><div class="ida-plate__sq"><span class="sq sq--auto"></span><span class="sq"></span></div></div><div class="ida-plate__row"><span>Deals <small>4/6</small></span><div class="ida-plate__sq"><span class="sq sq--auto"></span><span class="sq sq--auto"></span><span class="sq sq--approve"></span><span class="sq sq--approve"></span><span class="sq"></span><span class="sq"></span></div></div><div class="ida-plate__row"><span>Listings <small>3/3</small></span><div class="ida-plate__sq"><span class="sq sq--auto"></span><span class="sq sq--approve"></span><span class="sq sq--approve"></span></div></div><div class="ida-plate__row"><span>Admin <small>1/3</small></span><div class="ida-plate__sq"><span class="sq sq--auto"></span><span class="sq"></span><span class="sq"></span></div></div></div>
+  <div class="ida-plate__key"><span><i class="sq sq--auto"></i>Ida does it</span><span><i class="sq sq--approve"></i>You approve</span><span><i class="sq"></i>Still yours</span></div>
+  <a class="ida-btn ida-btn--quiet" href="tasks.html">See 2 tasks Ida could take</a>
+  <div class="wfline"><span class="ida-chip ida-chip--done">Running</span> 6 workflows · <span class="ida-chip ida-chip--problem">Paused</span> Showing scheduler, until the calendar is reconnected</div>
+</section>
+    </aside>
+  </div>
+  <nav class="tabbar" aria-label="Main"><a href="./" aria-current="page">Today</a><a href="tasks.html">Tasks</a><a href="workflows.html">Workflows</a><a href="rules.html">Rules</a><a href="apps.html">Apps</a></nav>
+</div>
+<script>
+document.querySelectorAll('.ida-cite').forEach(function (b) {
+  function toggle() {
+    var box = document.getElementById(b.getAttribute('aria-controls'));
+    var open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', String(!open));
+    box.hidden = open;
+  }
+  b.addEventListener('click', toggle);
+  b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+});
+
+document.querySelectorAll('.ida-source-toggle').forEach(function (t) { t.addEventListener('click', function () { var c = document.querySelector('.ida-cite[aria-controls="' + t.getAttribute('aria-controls') + '"]'); if (c) c.click(); }); });
+</script>
+<script>
+(function(){
+  function note(msg){ return '<div class="mock-done" role="status" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:16px 20px;font-size:15px"><span>'+msg+'</span><button class="ida-btn ida-btn--quiet" type="button" data-undo>Undo</button></div>'; }
+  function swap(el, msg){
+    var saved = el.innerHTML;
+    el.innerHTML = note(msg);
+    var u = el.querySelector('[data-undo]');
+    var t = setTimeout(function(){ if (u && u.isConnected) u.outerHTML = '<span style="font-size:13px;color:var(--ink-muted)">Done</span>'; }, 10000);
+    u.addEventListener('click', function(){ clearTimeout(t); el.innerHTML = saved; wire(el); });
+  }
+  function on(root, sel, fn){ root.querySelectorAll(sel).forEach(function(b){ b.addEventListener('click', function(e){ e.preventDefault(); fn(b); }); }); }
+  function wire(root){
+    on(root, '.ida-pile__card .ida-btn--primary', function(b){ swap(b.closest('.ida-pile__card'), '<b>Sent to Jen and Tom Park.</b> Inspection results for 412 Linden Ct'); });
+    on(root, '.ida-pile__card .ida-btn--quiet', function(b){ if (/Not now/.test(b.textContent)) swap(b.closest('.ida-pile__card'), 'Moved to tomorrow morning.'); });
+    on(root, '.ida-pile__tab .ida-btn', function(b){ swap(b.closest('.ida-pile__tab'), '<b>Asked the HOA</b> for the payoff letter, copying the title company.'); });
+  }
+  wire(document);
+  document.querySelectorAll('.ida-btn').forEach(function(b){
+    if (/^\s*Reconnect\s*$/.test(b.textContent)) b.addEventListener('click', function(){ var r = b.closest('.ida-line__c'); swap(r, '<b>Google Calendar reconnected.</b> The showing for Marcus Lee is back in your decisions.'); });
+  });
+})();
+</script>
+<aside class="ida-drawer" id="drawer" hidden aria-label="Source document">
+<div class="ida-drawer__head"><span class="ida-source__icon" aria-hidden="true">PDF</span><span><b>Home inspection report</b><small>412 Linden Ct · page 4 of 31 · highlighted where Ida read it</small></span><button class="ida-btn ida-btn--quiet" type="button" id="drawer-close">Close</button></div>
+<iframe id="drawer-frame" title="Home inspection report, page 4" src="about:blank"></iframe>
+<div class="ida-drawer__foot"><span>Check the highlight, then approve or edit on the card.</span><a href="report.html#page-4" target="_blank" rel="noopener">Open full screen</a></div>
+</aside>
+<script>
+(function(){
+var d=document.getElementById('drawer'),f=document.getElementById('drawer-frame');
+function open(e){ if(e) e.preventDefault(); f.src='report.html?embed=1#cite'; d.querySelector('b').textContent='Home inspection report'; d.querySelector('small').textContent='412 Linden Ct · page 4 of 31 · highlighted where Ida read it'; d.querySelector('.ida-source__icon').textContent='PDF'; d.querySelector('.ida-drawer__foot a').href='report.html#page-4'; d.hidden=false; document.body.classList.add('has-drawer'); document.getElementById('drawer-close').focus(); }
+function close(){ d.hidden=true; document.body.classList.remove('has-drawer'); }
+document.addEventListener('click',function(e){ var a=e.target.closest('.ida-source__link'); if(a) open(e); });
+document.getElementById('drawer-close').addEventListener('click',close);
+document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !d.hidden) close(); });
+})();
+</script>
+<script>
+(function(){
+var d=document.getElementById('drawer'),f=document.getElementById('drawer-frame');
+function openDoc(src,title,sub,full){ f.src=src; d.querySelector('.ida-source__icon').textContent='MLS'; d.querySelector('b').textContent=title; d.querySelector('small').textContent=sub; d.querySelector('.ida-drawer__foot a').href=full; d.hidden=false; document.body.classList.add('has-drawer'); }
+document.addEventListener('click',function(e){
+  var t=e.target.closest('button,a'); if(!t) return;
+  var txt=t.textContent.trim();
+  if(txt==='See the comparison'){ e.preventDefault(); openDoc('comps.html?embed=1#cite','Price comparison for 17 Ash St','Similar homes within half a mile · last 30 days','comps.html'); }
+  if(txt==='Draft the note'){ e.preventDefault(); var s=t.closest('.insight'); var saved=s.innerHTML;
+    s.innerHTML='<div><span class="k">Draft · price-review note · 17 Ash St</span><h3>Send the price review to the Garcias?</h3><div class="ida-letter" style="background:var(--paper-raised)"><dl><dt>To</dt><dd>Luis and Ana Garcia</dd><dt>Subject</dt><dd>17 Ash St: showings and nearby prices</dd><dt>Attached</dt><dd>Price comparison (3 homes)</dd></dl><p>Hi Luis and Ana,</p><p>Showings at 17 Ash St went from 9 a week to 3 over the last month. In the same weeks, <span class="ida-marker">two similar homes within half a mile cut their price by about 4%</span>, and both picked up showings again. I\'ve attached the comparison.</p><p>Could we talk this week about whether to adjust the price? I have time Wednesday or Thursday afternoon.</p><p>Dana</p></div><p style="margin:12px 0 0;font-size:13px;color:var(--ink-muted)">Ida doesn\'t suggest a new price. Your rule: always ask before quoting a price.</p><div class="ida-decision__actions" style="margin-top:12px"><button class="ida-btn" type="button" data-send>Approve and send</button><button class="ida-btn ida-btn--quiet" type="button">See the comparison</button><button class="ida-btn ida-btn--quiet" type="button" data-cancel>Not now</button></div></div>';
+    s.querySelector('[data-cancel]').addEventListener('click',function(){ s.innerHTML=saved; });
+    s.querySelector('[data-send]').addEventListener('click',function(){ s.innerHTML='<div class="mock-done" role="status" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap"><span><b>Sent to Luis and Ana Garcia.</b> Price review with the comparison attached.</span><button class="ida-btn ida-btn--quiet" type="button" data-undo>Undo</button></div>'; s.querySelector('[data-undo]').addEventListener('click',function(){ s.innerHTML=saved; }); });
+  }
+  if(txt==='Edit first'){ e.preventDefault(); var L=t.closest('.ida-decision').querySelector('.ida-letter'); var on=L.getAttribute('contenteditable')==='true'; L.setAttribute('contenteditable',on?'false':'true'); L.style.outline=on?'':'2px solid var(--brand)'; t.textContent=on?'Edit first':'Done editing'; if(!on) L.focus(); }
+  if(txt==='Done editing'){ e.preventDefault(); var L=t.closest('.ida-decision').querySelector('.ida-letter'); L.setAttribute('contenteditable','false'); L.style.outline=''; t.textContent='Edit first'; }
+});
+})();
+</script>

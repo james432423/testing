@@ -1,0 +1,86 @@
+<!-- @dsCard group="Screens" height=1300 width=1240 page subtitle="Each workflow with its trigger, what Ida does, its trust level and its track record." -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workflows — preview</title>
+<style>
+  body { background: var(--paper-sunk); }
+  .app { display: grid; grid-template-columns: 200px minmax(0, 1fr); min-height: 1100px; }
+  .side { padding: var(--space-6) var(--space-4) var(--space-8) var(--space-6); display: flex; flex-direction: column; gap: var(--space-8); }
+  .side .ida-mark { min-height: 44px; display: flex; align-items: center; }
+  .side nav { display: grid; gap: 2px; }
+  .side a { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 0 var(--space-3); margin-left: calc(var(--space-3) * -1); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; }
+  .side a:hover { background: var(--paper-raised); }
+  .side a[aria-current="page"] { font-weight: 700; background: var(--paper-raised); box-shadow: var(--shadow-paper); }
+  .count { min-width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; background: var(--brand-fill); color: var(--on-brand); }
+  .who { margin-top: auto; display: grid; gap: 2px; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .who strong { color: var(--ink); font-weight: 600; font-size: 14px; }
+  .desk { min-width: 0; padding-block: var(--space-6) var(--space-12); padding-inline: var(--space-4) var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--space-4) var(--space-8); align-content: start; }
+  .topbar { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between; min-height: 44px; }
+  .example { font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .ask { flex: 0 1 360px; display: flex; align-items: center; min-height: 44px; box-sizing: border-box; border: 1px solid var(--line-strong); background: var(--paper-raised); border-radius: var(--radius-sm); padding: 0 var(--space-3); font-size: 15px; }
+  .ask input { all: unset; flex: 1; min-width: 0; color: var(--ink); }
+  .ask input::placeholder { color: var(--ink-muted); }
+  .rail { display: grid; gap: var(--space-6); align-content: start; }
+  .tabbar { display: none; }
+  @media (max-width: 1080px) { .desk { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); } .side { display: none; }
+    .desk { padding-inline: var(--space-4); padding-bottom: 96px; }
+    .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--paper-raised); border-top: 1px solid var(--rule); }
+    .tabbar a { display: grid; place-items: center; min-height: 48px; font-size: 12px; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
+    .tabbar a[aria-current] { color: var(--ink); }
+  }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav><a href="#">Today <span class="count">3</span></a><a href="#">Tasks</a><a href="#" aria-current="page">Workflows</a><a href="#">Your rules</a><a href="#">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+  <div class="desk">
+    <div class="topbar"><span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Sample data</span><label class="ask"><input type="text" placeholder="Tell Ida something, or ask a question"></label></div>
+    <main class="ida-sheet ida-page">
+      <header class="ida-pagehead"><div><h1>Workflows</h1><p>The work Ida runs for you, what starts it, and how much it does on its own.</p></div><button class="ida-btn" type="button">Hand Ida a new task</button></header>
+      <article class="ida-wf">
+        <div class="ida-wf__main"><h2>Contract deadlines</h2><p class="ida-wf__trig"><span>When</span> Every morning at 7 am, for each signed contract</p><p class="ida-wf__does"><span>Ida</span> Reads the dates from the signed purchase agreement, reminds the lender, title company and clients, and flags anything at risk.</p><p class="ida-wf__exc"><span>Except</span><em>Asks you first if a date needs to change · <a href="#">your rule</a></em></p></div>
+        <div class="ida-wf__side"><span class="ida-chip ida-chip--done">Running</span><ol class="ida-trust" aria-label="Trust level"><li class="on"><span></span>Practice</li><li class="on"><span></span>You approve</li><li class="on cur"><span></span>On its own</li></ol><small>28 runs · 1 caught and fixed before sending</small><small>Ran 7:00 am · <a href="#">See what it sent</a></small></div>
+      </article>
+      <article class="ida-wf">
+        <div class="ida-wf__main"><h2>Document chase</h2><p class="ida-wf__trig"><span>When</span> When a file is missing a signature, disclosure or letter</p><p class="ida-wf__does"><span>Ida</span> Works out who owes what and follows up until it is in the deal folder.</p><p class="ida-wf__exc"><span>Except</span><em>Asks you first before contacting anyone not already on the deal · <a href="#">your rule</a></em></p></div>
+        <div class="ida-wf__side"><span class="ida-chip ida-chip--done">Running</span><ol class="ida-trust" aria-label="Trust level"><li class="on"><span></span>Practice</li><li class="on"><span></span>You approve</li><li class="on cur"><span></span>On its own</li></ol><small>41 reminders · 9 documents in</small><small>Ran 8:40 am · <a href="#">See what it sent</a></small></div>
+      </article>
+      <article class="ida-wf">
+        <div class="ida-wf__main"><h2>Lead replies</h2><p class="ida-wf__trig"><span>When</span> When a new lead arrives from Zillow or your website</p><p class="ida-wf__does"><span>Ida</span> Replies within 5 minutes using your listing details, then follows up on day 2 and day 5.</p><p class="ida-wf__exc"><span>Except</span><em>Asks you first if a lead mentions a price or an offer · <a href="#">your rule</a></em></p></div>
+        <div class="ida-wf__side"><span class="ida-chip ida-chip--done">Running</span><ol class="ida-trust" aria-label="Trust level"><li class="on"><span></span>Practice</li><li class="on"><span></span>You approve</li><li class="on cur"><span></span>On its own</li></ol><small>63 runs · 0 mistakes reached a client</small><small>Ran 9:05 am · <a href="#">See what it sent</a></small></div>
+      </article>
+      <article class="ida-wf">
+        <div class="ida-wf__main"><h2>Inspection to repair request</h2><p class="ida-wf__trig"><span>When</span> When an inspection report lands in your email</p><p class="ida-wf__does"><span>Ida</span> Summarizes it for your buyers with page references and drafts the repair request for the sellers.</p><p class="ida-nudge">You approved 11 of 11 buyer summaries. <button class="ida-link" type="button">Let it send those on its own</button> <span>Repair requests still come to you.</span></p></div>
+        <div class="ida-wf__side"><span class="ida-chip ida-chip--done">Running</span><ol class="ida-trust" aria-label="Trust level"><li class="on"><span></span>Practice</li><li class="on cur"><span></span>You approve</li><li class=""><span></span>On its own</li></ol><small>11 drafts · you approved 11, edited 2</small><small>Drafted 7:52 am</small></div>
+      </article>
+      <article class="ida-wf">
+        <div class="ida-wf__main"><h2>Offer comparison</h2><p class="ida-wf__trig"><span>When</span> When one of your listings gets a second offer</p><p class="ida-wf__does"><span>Ida</span> Puts every offer side by side (price, contingencies, financing, closing date) and flags risky terms.</p></div>
+        <div class="ida-wf__side"><span class="ida-chip ida-chip--done">Running</span><ol class="ida-trust" aria-label="Trust level"><li class="on"><span></span>Practice</li><li class="on cur"><span></span>You approve</li><li class=""><span></span>On its own</li></ol><small>3 comparisons · you approved 3</small><small>Drafted Sat</small></div>
+      </article>
+      <article class="ida-wf">
+        <div class="ida-wf__main"><h2>Showing scheduler</h2><p class="ida-wf__trig"><span>When</span> When a buyer asks for a showing</p><p class="ida-wf__does"><span>Ida</span> Finds a time that works for you, the buyer and the listing agent, then books it.</p></div>
+        <div class="ida-wf__side"><span class="ida-chip ida-chip--problem">Paused</span><ol class="ida-trust" aria-label="Trust level"><li class="on"><span></span>Practice</li><li class="on cur"><span></span>You approve</li><li class=""><span></span>On its own</li></ol><small>Paused: Google Calendar disconnected</small><small>Last ran Fri</small></div>
+      </article>
+      <article class="ida-wf">
+        <div class="ida-wf__main"><h2>Appraisal check</h2><p class="ida-wf__trig"><span>When</span> When an appraisal comes in on one of your deals</p><p class="ida-wf__does"><span>Ida</span> Compares it with the contract price and, if it is low, drafts your options for the clients.</p></div>
+        <div class="ida-wf__side"><span class="ida-chip ida-chip--running">Practicing</span><ol class="ida-trust" aria-label="Trust level"><li class="on cur"><span></span>Practice</li><li class=""><span></span>You approve</li><li class=""><span></span>On its own</li></ol><small>2 practice drafts · not sent</small><small>Practice run Sun</small></div>
+      </article>
+
+    </main>
+    <aside class="rail"><section class="ida-panel"><h2 class="h">How trust works</h2>
+<ol class="ida-steps"><li><b>Practice</b><small>Ida drafts privately. Nothing is sent. You compare its work with yours.</small></li><li><b>You approve</b><small>Ida prepares everything; nothing goes out until you tap Approve.</small></li><li><b>On its own</b><small>Ida acts and tells you after. You can still undo and see every run.</small></li></ol>
+<p class="muted">Ida suggests moving a workflow up when its record earns it; you decide. It drops back if a mistake gets through. Rules still apply at every level.</p></section></aside>
+  </div>
+  <nav class="tabbar" aria-label="Main"><a href="#">Today</a><a href="#">Tasks</a><a href="#" aria-current>Workflows</a><a href="#">Your rules</a></nav>
+</div>
+</body>
+</html>

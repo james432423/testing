@@ -1,0 +1,66 @@
+<!-- @dsCard group="Home" height=1020 width=820 subtitle="The card pile: the current decision with its cited source, and the next decision as a tab with its own quick action" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Decision card — preview</title></head>
+<body style="background:var(--paper-sunk);padding:var(--space-6)">
+<div style="max-width:620px"><section class="ida-pile" aria-label="Decisions">
+            <article class="ida-pile__card">
+              <header class="ida-pile__head"><span class="ida-circle sm" aria-hidden="true">2<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27 5.5C17 2.5 5.5 8 5 19.5S13.5 36 22.5 35s13.2-8.5 12-17.5C33.6 10.5 27.5 6 19 7.2"/></svg></span><span>Approve · 1 min</span><span class="ida-pile__pos">Decision 1 of 2</span></header>
+              <article class="ida-decision">
+            <span class="ida-decision__meta">412 Linden Ct · Parks family · closing Thursday</span>
+            <h2 class="ida-decision__q">Send the inspection summary to the Parks?</h2>
+            <div class="ida-letter">
+              <dl><dt>To</dt><dd>Jen and Tom Park</dd><dt>Subject</dt><dd>Inspection results for 412 Linden Ct</dd></dl>
+              <p>Hi Jen and Tom,</p>
+              <p>The inspection is back. The roof and furnace look good. The inspector flagged the <span role="button" tabindex="0" class="ida-marker ida-cite" aria-expanded="true" aria-controls="src-1">back deck railing, which needs repair before closing</span>. I'll ask the sellers about it today.</p>
+              <p>Dana</p>
+            </div>
+              <div class="ida-source ida-source--card" id="src-1">
+                <div class="ida-source__doc"><span class="ida-source__icon" aria-hidden="true">PDF</span><span><b>Home inspection report</b><small>412 Linden Ct · Bay Area Inspections · Oct 11 · page 4 of 31</small></span></div>
+                <blockquote>"<u>Rear deck guardrail is loose at two posts and does not meet height requirements.</u> Recommend repair by a qualified contractor prior to closing."</blockquote>
+                <a class="ida-source__link" href="#">Open the report at page 4<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg></a>
+              </div>
+            
+            <div class="ida-decision__actions">
+              <button class="ida-btn ida-btn--primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>Approve and send</button>
+              <button class="ida-btn" type="button">Edit first</button>
+              <button class="ida-btn ida-btn--quiet" type="button">Not now</button>
+            </div>
+            <span class="ida-decision__fine">Nothing goes out until you approve, and you can undo for 10 seconds after.</span>
+          </article>
+            </article>
+            <div class="ida-pile__tab" role="group" aria-label="Up next">
+              <span class="ida-circle sm" aria-hidden="true">3<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27 5.5C17 2.5 5.5 8 5 19.5S13.5 36 22.5 35s13.2-8.5 12-17.5C33.6 10.5 27.5 6 19 7.2"/></svg></span>
+              <span class="ida-pile__t"><span class="ida-pile__up">Up next · Ask · 10 sec</span><b>HOA payoff letter missing for Thursday's closing</b><small>412 Linden Ct · Ida emails the HOA and copies the title company</small></span>
+              <span class="ida-pile__acts"><span class="ida-chip ida-chip--attention">Needs you</span><button class="ida-btn" type="button">Ask the HOA</button><button class="ida-pile__open" type="button" aria-label="Open this decision"><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button></span>
+            </div>
+          </section></div>
+<script>
+document.querySelectorAll('.ida-cite').forEach(function (b) {
+  function toggle() {
+    var box = document.getElementById(b.getAttribute('aria-controls'));
+    var open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', String(!open));
+    box.hidden = open;
+  }
+  b.addEventListener('click', toggle);
+  b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+});
+
+document.querySelectorAll('.ida-source-toggle').forEach(function (t) { t.addEventListener('click', function () { var c = document.querySelector('.ida-cite[aria-controls="' + t.getAttribute('aria-controls') + '"]'); if (c) c.click(); }); });
+document.querySelectorAll('.ida-decision .ida-btn--primary').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var art = btn.closest('.ida-decision'), line = art.closest('.ida-line');
+    var mark = line.querySelector('.ida-circle');
+    if (mark) mark.outerHTML = '<svg class="ida-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>';
+    art.hidden = true;
+    var row = document.createElement('div');
+    row.className = 'ida-line__c rowc sent';
+    row.innerHTML = '<span><b>Sent to Jen and Tom Park</b><small>Inspection results for 412 Linden Ct</small></span><button class="ida-btn ida-btn--quiet" type="button">Undo</button>';
+    line.appendChild(row);
+    
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="ida.css">
+<meta charset="utf-8">
+<title>Ida · Workflows (design mock)</title>
+<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="ida-ui.css">
+<link rel="stylesheet" href="workflows.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main">
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav aria-label="Pages"><a href="./">Today <span class="count">3</span></a><a href="handled.html">Being handled</a><a href="sent.html">Sent</a><a href="tasks.html">Tasks</a><a href="workflows.html" aria-current="page">Workflows</a><a href="rules.html">Your rules</a><a href="apps.html">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+  <div class="desk has-rail">
+    <div class="topbar"><span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Design mock · sample data · <a href="onboarding.html">see onboarding</a></span><label class="ask"><input type="text" placeholder="Tell Ida something, or ask a question"></label></div>
+    <main class="ida-sheet ida-page">
+      <header class="ida-pagehead"><div><h1>Workflows</h1><p>What Ida may do for each type of client, and how much it does without asking you.</p></div><button class="ida-btn" type="button" id="newtask">Hand Ida a new task</button></header>
+      <div id="wflist"></div>
+</main>
+    <aside class="rail"><section class="ida-panel"><h2 class="h">How trust works</h2>
+<ol class="ida-steps"><li><b>Practice</b><small>Ida drafts privately. Nothing is sent. You compare its work with yours.</small></li><li><b>You approve</b><small>Ida prepares everything; nothing goes out until you tap Approve.</small></li><li><b>On its own</b><small>Ida acts and tells you after. You can still undo and see every run.</small></li></ol>
+<p class="muted">Tap a level on any row to change it. Ida suggests moving up when its record earns it; you decide. It drops back if a mistake gets through. Your rules apply at every level.</p></section></aside>
+  </div>
+  <nav class="tabbar" aria-label="Main"><a href="./">Today</a><a href="handled.html">Handled</a><a href="sent.html">Sent</a><a href="tasks.html">Tasks</a><button type="button" class="tabbar__more is-current" data-tabmore aria-haspopup="dialog" aria-expanded="false" aria-label="More pages, now on Workflows">More</button></nav>
+</div>
+<script src="ida-store.js"></script>
+<script src="ida-shell.js"></script>
+<script src="workflows.js"></script>
+<script src="ida-nav.js"></script>
+</body>
+</html>

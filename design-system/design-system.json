@@ -1,0 +1,57 @@
+{
+ "v": 3,
+ "assetGroups": {
+  "Logos": {
+   "name": "Logos",
+   "tile": "m",
+   "order": [
+    "ida-icon.svg",
+    "ida-icon-small.svg",
+    "ida-icon-dark.svg"
+   ],
+   "files": {
+    "ida-icon.svg": {
+     "name": "ida-icon.svg",
+     "blob": "bba4e9aacb282ee3040bbbf1d39763bd",
+     "size": 426,
+     "type": "image/svg+xml"
+    },
+    "ida-icon-small.svg": {
+     "name": "ida-icon-small.svg",
+     "blob": "a3a90778453f7db0ea60aa35a8f58bac",
+     "size": 425,
+     "type": "image/svg+xml"
+    },
+    "ida-icon-dark.svg": {
+     "name": "ida-icon-dark.svg",
+     "blob": "8e977209e05cc10750d0a81545476325",
+     "size": 534,
+     "type": "image/svg+xml"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "createdOnFiles": {
+  "at": "2026-10-11T17:10:39Z",
+  "v": 1
+ },
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "groups": [
+  "Logos"
+ ],
+ "lastChange": {
+  "by": "James",
+  "at": "2026-10-11T19:06:58Z",
+  "via": "Cowork",
+  "note": "Sample work is now transaction-coordinator style (deadlines from contracts, document chase, inspections to repair requests, offer comparison, appraisal check). Workflows show rule exceptions and per-task promotion suggestions; Home shows the sent log, the decision trend and counts that match Tasks."
+ },
+ "layout": "files",
+ "libraries": [],
+ "namespace": "Ida",
+ "sections": {},
+ "title": "Ida"
+}

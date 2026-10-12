@@ -1,0 +1,62 @@
+<!-- @dsCard group="Screens" height=1300 width=1240 page subtitle="First run: the owner's week mapped into tasks they can tick to hand to Ida." -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Onboarding — preview</title>
+<style>
+  body { background: var(--paper-sunk); }
+  .app { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 1100px; }
+  .side { padding: var(--space-6) var(--space-4) var(--space-8) var(--space-6); display: flex; flex-direction: column; gap: var(--space-8); }
+  .side .ida-mark { min-height: 44px; display: flex; align-items: center; }
+  .side nav { display: grid; gap: 2px; }
+  .side a { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 0 var(--space-3); margin-left: calc(var(--space-3) * -1); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; }
+  .side a:hover { background: var(--paper-raised); }
+  .side a[aria-current="page"] { font-weight: 700; background: var(--paper-raised); box-shadow: var(--shadow-paper); }
+  .count { min-width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; background: var(--brand-fill); color: var(--on-brand); }
+  .who { margin-top: auto; display: grid; gap: 2px; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+  .who strong { color: var(--ink); font-weight: 600; font-size: 14px; }
+  .desk { min-width: 0; padding-block: var(--space-6) var(--space-12); padding-inline: var(--space-4) var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4) var(--space-8); align-content: start; }
+  .topbar { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; justify-content: space-between; min-height: 44px; }
+  .example { font-size: 13px; font-weight: 500; color: var(--ink-muted); }
+  .ask { flex: 0 1 360px; display: flex; align-items: center; min-height: 44px; box-sizing: border-box; border: 1px solid var(--line-strong); background: var(--paper-raised); border-radius: var(--radius-sm); padding: 0 var(--space-3); font-size: 15px; }
+  .ask input { all: unset; flex: 1; min-width: 0; color: var(--ink); }
+  .ask input::placeholder { color: var(--ink-muted); }
+  .rail { display: grid; gap: var(--space-6); align-content: start; }
+  .tabbar { display: none; }
+  @media (max-width: 1080px) { .desk { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); } .side { display: none; }
+    .desk { padding-inline: var(--space-4); padding-bottom: 96px; }
+    .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--paper-raised); border-top: 1px solid var(--rule); }
+    .tabbar a { display: grid; place-items: center; min-height: 48px; font-size: 12px; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
+    .tabbar a[aria-current] { color: var(--ink); }
+  }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Main" hidden>
+    <span class="ida-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span>
+    <nav><a href="#">Today <span class="count">3</span></a><a href="#">Tasks</a><a href="#">Workflows</a><a href="#">Your rules</a><a href="#">Connected apps</a></nav>
+    <div class="who"><strong>Dana Reyes</strong>Reyes Realty · 4 open deals</div>
+  </aside>
+  <div class="desk">
+    <div class="topbar"><span class="ida-mark ida-mobile-mark" role="img" aria-label="Ida"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13.5c2 1.2 3.6 3 4.8 5.2C11.6 12 15.4 7.2 20.5 4.2"/></svg>ıda</span><span class="example">Sample data</span><label class="ask" hidden><input type="text" placeholder="Tell Ida something, or ask a question"></label></div>
+    <main class="ida-sheet ida-page">
+      <div class="ida-onb">
+        <ol class="ida-onb__steps"><li class="done">Your work</li><li class="cur">Your week</li><li>Connect apps</li><li>First practice run</li></ol>
+        <h1>Here's a typical week for a listing and buyer's agent</h1>
+        <p class="lead">Ida built this from what agents like you do every week and what you told it: <span class="ida-marker">"mostly buyers, about 4 deals at a time, I hate chasing paperwork"</span>. Tick what you'd like off your plate. You can change this any time.</p>
+        <div class="ida-map"><section class="ida-map__col"><h3>Leads</h3><ul><li class="ida-map__item is-ready"><label><input type="checkbox" checked aria-label="Hand to Ida"><span><b>Reply to new leads</b><small>Ida can do this now</small></span></label></li><li class="ida-map__item is-ready"><label><input type="checkbox" checked aria-label="Hand to Ida"><span><b>Prep for listing appointments</b><small>Ida can do this now</small></span></label></li><li class="ida-map__item is-setup"><label><input type="checkbox"  aria-label="Hand to Ida"><span><b>Book showings</b><small>Needs an app connected</small></span></label></li><li class="ida-map__item is-yours"><label><input type="checkbox" disabled aria-label="Hand to Ida"><span><b>Call back hot leads</b><small>Best kept by you</small></span></label></li></ul></section><section class="ida-map__col"><h3>Deals</h3><ul><li class="ida-map__item is-ready"><label><input type="checkbox" checked aria-label="Hand to Ida"><span><b>Track contract deadlines</b><small>Ida can do this now</small></span></label></li><li class="ida-map__item is-ready"><label><input type="checkbox" checked aria-label="Hand to Ida"><span><b>Chase missing documents</b><small>Ida can do this now</small></span></label></li><li class="ida-map__item is-ready"><label><input type="checkbox" checked aria-label="Hand to Ida"><span><b>Inspection summaries and repair requests</b><small>Ida can do this now</small></span></label></li><li class="ida-map__item is-setup"><label><input type="checkbox"  aria-label="Hand to Ida"><span><b>Compare offers for sellers</b><small>Needs an app connected</small></span></label></li><li class="ida-map__item is-setup"><label><input type="checkbox"  aria-label="Hand to Ida"><span><b>Check appraisals</b><small>Needs an app connected</small></span></label></li><li class="ida-map__item is-yours"><label><input type="checkbox" disabled aria-label="Hand to Ida"><span><b>Negotiate offers</b><small>Best kept by you</small></span></label></li></ul></section><section class="ida-map__col"><h3>Listings</h3><ul><li class="ida-map__item is-ready"><label><input type="checkbox" checked aria-label="Hand to Ida"><span><b>Weekly showing report</b><small>Ida can do this now</small></span></label></li><li class="ida-map__item is-setup"><label><input type="checkbox"  aria-label="Hand to Ida"><span><b>Price-review notes</b><small>Needs an app connected</small></span></label></li><li class="ida-map__item is-yours"><label><input type="checkbox" disabled aria-label="Hand to Ida"><span><b>Stage and photograph homes</b><small>Best kept by you</small></span></label></li></ul></section><section class="ida-map__col"><h3>Admin</h3><ul><li class="ida-map__item is-setup"><label><input type="checkbox"  aria-label="Hand to Ida"><span><b>File signed documents</b><small>Needs an app connected</small></span></label></li><li class="ida-map__item is-setup"><label><input type="checkbox"  aria-label="Hand to Ida"><span><b>Log commissions and expenses</b><small>Needs an app connected</small></span></label></li><li class="ida-map__item is-yours"><label><input type="checkbox" disabled aria-label="Hand to Ida"><span><b>Renew license and CE hours</b><small>Best kept by you</small></span></label></li></ul></section></div>
+        <div class="ida-onb__foot"><p><b>6 tasks selected</b> · about 4 hours a week back. Ida starts every task in practice mode: it drafts, you compare, nothing is sent.</p><div><button class="ida-btn ida-btn--quiet" type="button">Add a task we missed</button><button class="ida-btn ida-btn--primary" type="button">Continue</button></div></div>
+      </div>
+
+    </main>
+    
+  </div>
+  <nav class="tabbar" aria-label="Main" hidden><a href="#">Today</a><a href="#">Tasks</a><a href="#">Workflows</a><a href="#">Your rules</a></nav>
+</div>
+</body>
+</html>
